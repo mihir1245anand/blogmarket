@@ -3,7 +3,18 @@ const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcryptjs');
 
-const dbPath = path.join(__dirname, '..', 'blog.db');
+const isVercel = Boolean(process.env.VERCEL);
+const localDbPath = path.join(__dirname, '..', 'blog.db');
+const dbPath = isVercel ? path.join('/tmp', 'blog.db') : localDbPath;
+
+if (isVercel && !fs.existsSync(dbPath) && fs.existsSync(localDbPath)) {
+  try {
+    fs.copyFileSync(localDbPath, dbPath);
+  } catch (e) {
+    console.warn('Could not copy local db to /tmp, will initialize fresh:', e.message);
+  }
+}
+
 const db = new DatabaseSync(dbPath);
 
 // Enable foreign keys and WAL mode for optimal performance and data integrity

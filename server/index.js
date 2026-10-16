@@ -54,6 +54,11 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Digital Pulse Blog Server running at http://localhost:${PORT}`);
-});
+// Export app for Vercel serverless and testing
+module.exports = app;
+
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Blog Market Server running at http://localhost:${PORT}`);
+  });
+}
