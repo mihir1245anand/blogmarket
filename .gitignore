@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Local Environment Variables
+.env
+.env.local
+
+# SQLite Database
+blog.db
+blog.db-journal
+blog.db-wal
+blog.db-shm
+
+# Uploads (keep directory via .gitkeep)
+uploads/*
+!uploads/.gitkeep
+
+# System & Editor files
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
